@@ -1,109 +1,84 @@
-/* 로봇 팔 애니메이션 */
-@keyframes robotArmMove {
-  0%,
-  100% {
-    transform: rotate(-15deg);
-  }
-  50% {
-    transform: rotate(15deg);
-  }
+@import "tailwindcss";
+
+/* 로봇 이동 시나리오 (6초 루프) */
+@keyframes robotMove {
+  0% { transform: translateX(0); }         /* 중앙 대기 */
+  15% { transform: translateX(-140px); }   /* 왼쪽 이동 (거리 조정) */
+  45% { transform: translateX(-140px); }   /* 음료 받는 중 */
+  60% { transform: translateX(110px); }    /* 오른쪽 손님에게 이동 */
+  85% { transform: translateX(110px); }    /* 서빙 중 */
+  100% { transform: translateX(0); }       /* 복귀 */
 }
 
-@keyframes forearmMove {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-20deg);
-  }
-  75% {
-    transform: rotate(20deg);
-  }
+@keyframes eyeBlink {
+  0%, 48%, 52%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.1); }
 }
 
-@keyframes gripperOpen {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(2px);
-  }
+/* 쟁반 위 컵 (이동 중인 컵) */
+@keyframes trayCupAnim {
+  0% { opacity: 0; }
+  15% { opacity: 1; height: 100%; }     /* 도착 시 등장 */
+  45% { opacity: 1; }                   
+  80% { opacity: 1; transform: translateY(0); }
+  81% { opacity: 0; transform: translateY(0); } /* 손님 앞에 놓는 순간 사라짐 */
+  100% { opacity: 0; }
 }
 
-@keyframes gripperClose {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-2px);
-  }
+/* 컵 내부 액체 차오름 */
+@keyframes fillLiquid {
+  0%, 15% { height: 0%; }
+  40% { height: 85%; }   /* 가득 참 */
+  100% { height: 85%; }
 }
 
-@keyframes drinkMove {
-  0% {
-    transform: translate(-50%, 0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translate(-50%, -120px) scale(0.9);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, 0) scale(1);
-    opacity: 1;
-  }
+/* 디스펜서 물줄기 */
+@keyframes pourStream {
+  0%, 15% { height: 0; opacity: 0; }
+  16% { height: 80px; opacity: 1; }    /* 물줄기 길이 조정 */
+  40% { height: 80px; opacity: 1; }
+  41% { height: 0; opacity: 0; }
+  100% { height: 0; opacity: 0; }
 }
 
-@keyframes pulseEffect {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.1;
-  }
+/* 서빙된 음료 (카운터 위) */
+@keyframes servedAppear {
+  0%, 80% { opacity: 0; transform: translateY(-10px); }
+  81% { opacity: 1; transform: translateY(0); } /* 탁 놓임 */
+  95% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; }
 }
 
-@keyframes toastSlideIn {
-  from {
-    transform: translate(-50%, -20px);
-    opacity: 0;
-  }
-  to {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
+/* 클래스 적용 */
+.robot-character {
+  animation: robotMove 6s ease-in-out infinite;
 }
 
-.robot-arm {
-  animation: robotArmMove 4s ease-in-out infinite;
+.robot-eye {
+  animation: eyeBlink 3s infinite;
 }
 
-.robot-forearm {
-  animation: forearmMove 4s ease-in-out infinite;
+.moving-cup {
+  animation: trayCupAnim 6s steps(1) infinite;
 }
 
-.robot-gripper-left {
-  animation: gripperOpen 4s ease-in-out infinite;
+.cup-liquid {
+  animation: fillLiquid 6s linear infinite;
 }
 
-.robot-gripper-right {
-  animation: gripperClose 4s ease-in-out infinite;
+.liquid-stream {
+  animation: pourStream 6s ease-out infinite;
 }
 
-.drink-cup {
-  animation: drinkMove 4s ease-in-out infinite;
-}
-
-.pulse-effect {
-  animation: pulseEffect 2s ease-in-out infinite;
+.served-drink {
+  animation: servedAppear 6s ease-out infinite;
 }
 
 .animate-toast {
   animation: toastSlideIn 0.3s ease-out;
+}
+
+@keyframes toastSlideIn {
+  from { transform: translate(-50%, -20px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
 }

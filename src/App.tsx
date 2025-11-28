@@ -5,9 +5,10 @@ import DrinkOrder from "./components/DrinkOrder";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
-      {/* 모바일 중앙 정렬 컨테이너 */}
-      <div className="max-w-[420px] mx-auto bg-white min-h-screen shadow-2xl">
+    // 배경: Deep Midnight Blue
+    <div className="min-h-screen bg-[#020617] flex justify-center">
+      {/* 모바일 컨테이너: 약간 더 밝은 네이비 + 테두리 */}
+      <div className="w-full max-w-[420px] bg-[#0f172a] min-h-screen shadow-2xl border-x border-[#1e293b] relative">
         <Header />
         <RobotAnimation />
         <DrinkOrder />

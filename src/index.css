@@ -1,17 +1,112 @@
 @import "tailwindcss";
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 1. 팔 전체의 움직임 (왼쪽으로 이동 -> 중앙으로 복귀) */
+@keyframes armCycle {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg); /* 중앙 대기 */
+  }
+  10% {
+    transform: translateX(-40px) rotate(-20deg); /* 왼쪽으로 이동 (픽업 위치) */
+  }
+  40% {
+    transform: translateX(-40px) rotate(-20deg); /* 픽업 중 */
+  }
+  60% {
+    transform: translateX(0) rotate(0deg); /* 중앙으로 복귀 */
+  }
+  90% {
+    transform: translateX(0) rotate(0deg); /* 서빙 완료 대기 */
+  }
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding: 0;
+/* 2. 상박의 굽힘 (집을 때 내려가고, 옮길 때 올라감) */
+@keyframes forearmCycle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(-45deg); /* 팔을 뻗음 */
+  }
+  35% {
+    transform: rotate(-45deg);
+  }
+  60% {
+    transform: rotate(0deg); /* 원위치 */
+  }
+}
+
+/* 3. 그리퍼 동작 (집게 벌리기 -> 오므리기 -> 벌리기) */
+@keyframes gripperLeftCycle {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(20deg); } /* 벌림 */
+  25% { transform: rotate(-5deg); } /* 잡음 (오므림) */
+  60% { transform: rotate(-5deg); } /* 꽉 쥐고 이동 */
+  70% { transform: rotate(20deg); } /* 놓음 */
+  80% { transform: rotate(0deg); }
+}
+
+@keyframes gripperRightCycle {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(-20deg); }
+  25% { transform: rotate(5deg); }
+  60% { transform: rotate(5deg); }
+  70% { transform: rotate(-20deg); }
+  80% { transform: rotate(0deg); }
+}
+
+/* 4. 로봇 손에 들린 컵 (집었을 때만 보임) */
+@keyframes cupInHandCycle {
+  0%, 100% { opacity: 0; }
+  25% { opacity: 1; } /* 잡는 순간 나타남 */
+  70% { opacity: 1; } /* 놓는 순간까지 유지 */
+  71% { opacity: 0; } /* 놓으면 사라짐 (테이블 컵으로 대체) */
+}
+
+/* 5. 서빙된 컵 (로봇이 놓은 후 나타남) */
+@keyframes servedCupCycle {
+  0%, 65% { opacity: 0; transform: translate(-50%, -10px); }
+  70% { opacity: 1; transform: translate(-50%, 0); } /* 탁 놓임 */
+  95% { opacity: 1; }
+  100% { opacity: 0; } /* 다음 사이클을 위해 사라짐 */
+}
+
+/* 토스트 팝업 애니메이션 */
+@keyframes toastSlideIn {
+  from {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+/* 애니메이션 적용 클래스들 */
+.robot-container {
+  animation: armCycle 4s ease-in-out infinite;
+}
+
+.fore-arm {
+  animation: forearmCycle 4s ease-in-out infinite;
+}
+
+.gripper-left {
+  animation: gripperLeftCycle 4s ease-in-out infinite;
+}
+
+.gripper-right {
+  animation: gripperRightCycle 4s ease-in-out infinite;
+}
+
+.moving-cup {
+  animation: cupInHandCycle 4s steps(1) infinite;
+}
+
+.served-cup {
+  animation: servedCupCycle 4s ease-in-out infinite;
+}
+
+.animate-toast {
+  animation: toastSlideIn 0.3s ease-out;
 }
