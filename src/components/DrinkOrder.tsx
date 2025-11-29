@@ -46,11 +46,11 @@ export default function DrinkOrder({ onOrder }: DrinkOrderProps) {
           <button
             key={drink.id}
             onClick={() => handleOrder(drink)}
-            disabled={isOrdering}
+            disabled={isOrdering || drink.disabled}
             className={`w-full group flex items-center justify-between p-5 rounded-lg transition-all duration-300
               ${drink.color}
               ${
-                isOrdering
+                isOrdering || drink.disabled
                   ? "opacity-30 grayscale cursor-not-allowed"
                   : "hover:translate-x-1 shadow-lg hover:shadow-xl"
               }`}

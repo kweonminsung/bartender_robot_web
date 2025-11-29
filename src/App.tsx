@@ -11,22 +11,26 @@ import { API } from "./api";
 function App() {
   const [orders, setOrders] = useState<Order[]>([]);
 
-  // 주문 목록 서버에서 가져오기
+  // 주문 목록 서버에서 2초마다 가져오기
   useEffect(() => {
-    fetch(`${API}/orders`)
-      .then((res) => res.json())
-      .then((data) => {
-        // timestamp를 Date 객체로 변환
-        setOrders(
-          data.map((order: any) => ({
-            ...order,
-            timestamp: new Date(order.timestamp),
-          }))
-        );
-      })
-      .catch((err) => {
-        console.error("주문 목록 불러오기 실패", err);
-      });
+    const fetchOrders = () => {
+      fetch(`${API}/orders`)
+        .then((res) => res.json())
+        .then((data) => {
+          setOrders(
+            data.map((order: any) => ({
+              ...order,
+              timestamp: new Date(order.timestamp),
+            }))
+          );
+        })
+        .catch((err) => {
+          console.error("주문 목록 불러오기 실패", err);
+        });
+    };
+    fetchOrders();
+    const interval = setInterval(fetchOrders, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   // 주문 생성 (서버에 POST)
@@ -61,8 +65,8 @@ function App() {
       <Route
         path="/"
         element={
-          <div className="min-h-screen bg-[#020617] flex justify-center">
-            <div className="w-full max-w-[420px] bg-[#0f172a] min-h-screen shadow-2xl border-x border-[#1e293b] relative">
+          <div className="min-h-screen bg-[#18181b] flex justify-center">
+            <div className="w-full max-w-[420px] bg-[#18181b] min-h-screen shadow-2xl border-x border-[#27272a] relative">
               <Header />
               <RobotAnimation />
               <DrinkOrder onOrder={handleOrder} />

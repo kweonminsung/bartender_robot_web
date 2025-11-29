@@ -6,6 +6,7 @@ export interface Drink {
   emoji: string;
   color: string;
   textColor: string;
+  disabled?: boolean;
 }
 
 export interface Order {
@@ -18,29 +19,22 @@ export interface Order {
 export const DRINKS: Drink[] = [
   {
     id: "1",
-    name: "Midnight Cola",
+    name: "Green Plum",
     csvPath: "/home/kevin/bartender_robot/case1.csv",
-    desc: "Zero Sugar, Deep Taste",
-    emoji: "🥤",
-    color: "bg-[#020617] border border-[#1e293b] hover:border-[#334155]",
-    textColor: "text-slate-300",
+    desc: "Refreshing plum beverage",
+    emoji: "🍏",
+    color: "bg-[#132313] border border-[#355c35] hover:border-[#4e7c4e]",
+    textColor: "text-green-100",
+    disabled: false,
   },
   {
     id: "2",
-    name: "Emerald City",
+    name: "Zero Cola",
     csvPath: "/home/kevin/bartender_robot/case2.csv",
-    desc: "Melon, Lemon, Soda",
-    emoji: "🍸",
-    color: "bg-[#022c22] border border-[#064e3b] hover:border-[#065f46]",
-    textColor: "text-emerald-200",
-  },
-  {
-    id: "3",
-    name: "Golden Hour",
-    csvPath: "/home/kevin/bartender_robot/case3.csv",
-    desc: "Whiskey, Bitters, Oak",
-    emoji: "🥃",
-    color: "bg-[#2a1b12] border border-[#451a03] hover:border-[#78350f]",
-    textColor: "text-amber-200",
+    desc: "Zero calorie cool cola",
+    emoji: "🥤",
+    color: "bg-[#18181b] border border-[#27272a] hover:border-[#3f3f46]",
+    textColor: "text-gray-200",
+    disabled: false,
   },
 ];
